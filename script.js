@@ -5,7 +5,7 @@ jQuery(document).ready(function () {
   var height = jQuery("#canvas").height();
 
   var cw = 10;
-  var d;
+  var direction;
   var food;
   var score;
   var level;
@@ -16,7 +16,7 @@ jQuery(document).ready(function () {
   var snake_array;
 
   function init() {
-    d = "right";
+    direction = "right";
     create_snake();
     create_food();
     score = 0;
@@ -51,10 +51,10 @@ jQuery(document).ready(function () {
     var nx = snake_array[0].x;
     var ny = snake_array[0].y;
 
-    if (d == "right") nx++;
-    else if (d == "left") nx--;
-    else if (d == "up") ny--;
-    else if (d == "down") ny++;
+    if (direction == "right") nx++;
+    else if (direction == "left") nx--;
+    else if (direction == "up") ny--;
+    else if (direction == "down") ny++;
 
     if (
       nx == -1 ||
@@ -130,10 +130,10 @@ jQuery(document).ready(function () {
 
   jQuery(document).keydown(function (e) {
     var key = e.which;
-    if (key == "37" && d != "right") d = "left";
-    else if (key == "38" && d != "down") d = "up";
-    else if (key == "39" && d != "left") d = "right";
-    else if (key == "40" && d != "up") d = "down";
+    if (key == "37" && direction != "right") direction = "left";
+    else if (key == "38" && direction != "down") direction = "up";
+    else if (key == "39" && direction != "left") direction = "right";
+    else if (key == "40" && direction != "up") direction = "down";
   });
 
   $(".stopInterval").on("click", function () {
