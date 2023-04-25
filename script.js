@@ -9,8 +9,7 @@ jQuery(document).ready(function () {
   var food;
   var score;
   var level;
-  var highScore = 0
-  localStorage.setItem("highScore", highScore)
+  var highScore
   
 
   var snake_array;
@@ -90,7 +89,7 @@ jQuery(document).ready(function () {
     paint_cell(food.x, food.y, "red");
     var score_text = "Score: " + score;
     var level_text = "Level: " + level;
-    var high_text = "High Score: " + localStorage.getItem("highScore");
+    var high_text = "High Score: " + (localStorage.getItem("highScore") ? localStorage.getItem("highScore") : 0 );
     context.fillText(score_text, 5, height - 5);
     context.fillText(level_text, 60, height - 5);
     context.fillText(high_text, 120, height - 5);
@@ -140,5 +139,6 @@ jQuery(document).ready(function () {
     context.clearRect(0, 0, canvas.width, canvas.height);
     clearInterval(game_loop);
   });
+  $(".newGame").on("click", init);
 
 });
