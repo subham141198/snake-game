@@ -1,14 +1,16 @@
 jQuery(document).ready(function () {
   var canvas = jQuery("#canvas")[0];
-  var ctx = canvas.getContext("2d");
-  var w = jQuery("#canvas").width();
-  var h = jQuery("#canvas").height();
+  var context = canvas.getContext("2d");
+  var width = jQuery("#canvas").width();
+  var height = jQuery("#canvas").height();
 
   var cw = 10;
   var d;
   var food;
   var score;
   var level;
+  var highScore = 0
+  
 
   var snake_array;
 
@@ -34,16 +36,16 @@ jQuery(document).ready(function () {
 
   function create_food() {
     food = {
-      x: Math.round((Math.random() * (w - cw)) / cw),
-      y: Math.round((Math.random() * (h - cw)) / cw),
+      x: Math.round((Math.random() * (width - cw)) / cw),
+      y: Math.round((Math.random() * (height - cw)) / cw),
     };
   }
 
   function paint() {
-    ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, w, h);
-    ctx.strokeStyle = "black";
-    ctx.strokeRect(0, 0, w, h);
+    context.fillStyle = "white";
+    context.fillRect(0, 0, width, height);
+    context.strokeStyle = "black";
+    context.strokeRect(0, 0, width, height);
 
     var nx = snake_array[0].x;
     var ny = snake_array[0].y;
@@ -55,13 +57,12 @@ jQuery(document).ready(function () {
 
     if (
       nx == -1 ||
-      nx == w / cw ||
+      nx == width / cw ||
       ny == -1 ||
-      ny == h / cw ||
+      ny == height / cw ||
       check_collision(nx, ny, snake_array)
     ) {
       init();
-
       return;
     }
 
@@ -69,7 +70,8 @@ jQuery(document).ready(function () {
       var tail = { x: nx, y: ny };
       score++;
       levelIncrease(score)
-
+      
+      highScore = localStorage.getItem("highScore") ? localStorage.getItem("highScore") < score ? localStorage.setItem("highScore", score) : localStorage.getItem("highScore") :  localStorage.setItem("highScore", score)
       create_food();
     } else {
       var tail = snake_array.pop();
@@ -87,14 +89,16 @@ jQuery(document).ready(function () {
     paint_cell(food.x, food.y, "red");
     var score_text = "Score: " + score;
     var level_text = "Level: " + level;
-    ctx.fillText(score_text, 5, h - 5);
-    ctx.fillText(level_text, 60, h - 5);
+    var high_text = "High Score: " + localStorage.getItem("highScore");
+    context.fillText(score_text, 5, height - 5);
+    context.fillText(level_text, 60, height - 5);
+    context.fillText(high_text, 120, height - 5);
   }
   function paint_cell(x, y, color) {
-    ctx.fillStyle = color;
-    ctx.fillRect(x * cw, y * cw, cw, cw);
-    ctx.strokeStyle = "white";
-    ctx.strokeRect(x * cw, y * cw, cw, cw);
+    context.fillStyle = color;
+    context.fillRect(x * cw, y * cw, cw, cw);
+    context.strokeStyle = "white";
+    context.strokeRect(x * cw, y * cw, cw, cw);
   }
 
   function levelIncrease(){
@@ -130,4 +134,10 @@ jQuery(document).ready(function () {
     else if (key == "39" && d != "left") d = "right";
     else if (key == "40" && d != "up") d = "down";
   });
+
+  $(".stopInterval").on("click", function () {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    clearInterval(game_loop);
+  });
+
 });
