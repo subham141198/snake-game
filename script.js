@@ -10,6 +10,7 @@ jQuery(document).ready(function () {
   var score;
   var level;
   var highScore = 0
+  localStorage.setItem("highScore", highScore)
   
 
   var snake_array;
