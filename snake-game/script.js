@@ -71,7 +71,7 @@ jQuery(document).ready(function () {
       score++;
       levelIncrease(score)
       
-      highScore = localStorage.getItem("highScore") ? localStorage.getItem("highScore") < score ? localStorage.setItem("highScore", score) : localStorage.getItem("highScore") :  0
+      highScore = localStorage.getItem("highScore") ? localStorage.getItem("highScore") < score ? localStorage.setItem("highScore", score) : localStorage.getItem("highScore") :  localStorage.setItem("highScore", score)
       create_food();
     } else {
       var tail = snake_array.pop();
@@ -89,7 +89,7 @@ jQuery(document).ready(function () {
     paint_cell(food.x, food.y, "red");
     var score_text = "Score: " + score;
     var level_text = "Level: " + level;
-    var high_text = "High Score: " + ( localStorage.getItem("highScore") ? localStorage.getItem("highScore") : 0 );
+    var high_text = "High Score: " + (localStorage.getItem("highScore") ? localStorage.getItem("highScore") : 0 );
     context.fillText(score_text, 5, height - 5);
     context.fillText(level_text, 60, height - 5);
     context.fillText(high_text, 120, height - 5);
