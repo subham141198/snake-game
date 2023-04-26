@@ -9,7 +9,7 @@ jQuery(document).ready(function () {
   var food;
   var score;
   var level;
-  var highScore
+  var highScore = 0
   
 
   var snake_array;
@@ -71,7 +71,7 @@ jQuery(document).ready(function () {
       score++;
       levelIncrease(score)
       
-      highScore = localStorage.getItem("highScore") ? localStorage.getItem("highScore") < score ? localStorage.setItem("highScore", score) : localStorage.getItem("highScore") :  0
+      highScore = localStorage.getItem("highScore") ? localStorage.getItem("highScore") < score ? localStorage.setItem("highScore", score) : localStorage.getItem("highScore") :  localStorage.setItem("highScore", score)
       create_food();
     } else {
       var tail = snake_array.pop();
